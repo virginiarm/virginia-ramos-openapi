@@ -1,13 +1,20 @@
-//
-const randomInt =Math.floor(Math.random() + 423);
-const ramdomId = coffeeIds(randomInt);
-const url = 'https://api.sampleapis.com/coffee/iced/$(randomId)';
-console.log(url);
 
-fetch(url)
-    .then((response)=> {
-    if (!response.ok){
-        throw new Error('Request Failed');
-    }
-    return response.json()
-    })
+    document.getElementById('getCoffeeBtn').addEventListener('click', function() {
+        fetch('https://coffee.alexflipnote.dev/random')
+            .then(response => response.json())
+            .then(data => {
+                const coffeeName = data.title;
+                const coffeeDescription = data.description;
+    
+                document.getElementById('coffeeName').textContent = `Coffee: ${coffeeName}`;
+                document.getElementById('coffeeDescription').textContent = `Description: ${coffeeDescription}`;
+                
+               
+                document.getElementById('coffeeResult').classList.remove('hidden');
+            })
+            .catch(error => {
+                console.error('Error fetching coffee data:', error);
+                alert('Failed to fetch coffee data. Please try again.');
+            });
+    });
+    
